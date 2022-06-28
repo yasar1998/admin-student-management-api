@@ -2,19 +2,19 @@ package com.example.ASMapi.controller;
 
 import com.example.ASMapi.dto.AppUserDto;
 import com.example.ASMapi.request.LoginRequest;
+import com.example.ASMapi.request.RegisterRequest;
 import com.example.ASMapi.security.response.TokenResponse;
 import com.example.ASMapi.security.utils.TokenManager;
 import com.example.ASMapi.service.AppUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 
@@ -27,11 +27,14 @@ public class AuthRegisterController {
 
     private final TokenResponse tokenResponse;
 
+    private final AppUserService appUserService;
 
-    public AuthRegisterController(AuthenticationManager authenticationManager, TokenManager tokenManager, TokenResponse tokenResponse) {
+
+    public AuthRegisterController(AuthenticationManager authenticationManager, TokenManager tokenManager, TokenResponse tokenResponse, AppUserService appUserService) {
         this.authenticationManager = authenticationManager;
         this.tokenManager = tokenManager;
         this.tokenResponse = tokenResponse;
+        this.appUserService = appUserService;
     }
 
     @PostMapping("/login")
@@ -47,6 +50,10 @@ public class AuthRegisterController {
         return ResponseEntity.ok().body(tokenResponse);
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<AppUserDto> register(@Valid @RequestBody RegisterRequest registerRequest){
+        return new ResponseEntity<>(appUserService.createRecord(registerRequest), HttpStatus.CREATED);
+    }
 
 
 }
