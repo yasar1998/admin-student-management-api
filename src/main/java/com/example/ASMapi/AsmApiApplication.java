@@ -3,6 +3,7 @@ package com.example.ASMapi;
 import com.example.ASMapi.entity.AppUser;
 import com.example.ASMapi.repository.UserRepository;
 import com.example.ASMapi.security.utils.Roles;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -33,6 +34,11 @@ public class AsmApiApplication implements CommandLineRunner {
 	@Bean
 	public PasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	public ModelMapper modelMapper(){
+		return new ModelMapper();
 	}
 
 }

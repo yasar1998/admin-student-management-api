@@ -8,6 +8,7 @@ import com.example.ASMapi.repository.UserRepository;
 import com.example.ASMapi.request.AssignRequest;
 import com.example.ASMapi.security.utils.Roles;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class AdminServiceImpl implements AdminService{
 
     private final ModelMapper modelMapper;
 
-    public AdminServiceImpl(UserRepository userRepository, ModelMapper modelMapper) {
+    public AdminServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
     }
@@ -29,8 +30,7 @@ public class AdminServiceImpl implements AdminService{
     public IdResponse deleteStudentRecord(Long id) {
         AppUser appUser = userRepository.findById(id).filter(user -> user.getRoleList().contains(Roles.STUDENT)).orElseThrow(()->new UserNotFoundException("Student not found"));
         userRepository.delete(appUser);
-        IdResponse idResponse = new IdResponse();
-        idResponse.setId(id);
+        IdResponse idResponse = new IdResponse(id);
         return idResponse;
     }
 
