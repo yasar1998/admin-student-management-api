@@ -1,6 +1,7 @@
 package com.example.ASMapi.exceptions;
 
 import com.example.ASMapi.exceptions.custom.UnsuccessfulPasswordUpdateException;
+import com.example.ASMapi.exceptions.custom.UserNotFoundException;
 import com.example.ASMapi.exceptions.error.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,12 @@ public class ExceptionHandlerController {
     public ResponseEntity<ErrorResponse> handleUnsuccessfulPasswordUpdateException(HttpServletRequest request){
         ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now().toString(),409, "Password cannot be changed", request.getServletPath());
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(value = {UserNotFoundException.class})
+    public ResponseEntity<ErrorResponse> handleUserNotFoundException(HttpServletRequest request, UserNotFoundException exception){
+        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now().toString(),404, exception.getMessage(), request.getServletPath());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
 }

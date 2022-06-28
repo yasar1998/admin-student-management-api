@@ -29,5 +29,4 @@ public class AppUserController {
     public ResponseEntity<AppUserDto>updatePassword(@Valid @RequestBody PasswordUpdateRequest passwordUpdateRequest, HttpServletRequest request){
         return new ResponseEntity<>(appUserService.updatePassword(passwordUpdateRequest, request.getUserPrincipal().getName()), HttpStatus.OK);
     }
-
 }
