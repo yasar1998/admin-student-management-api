@@ -21,8 +21,8 @@ public class AppUserServiceImpl implements AppUserService{
 
     @Override
     public AppUserDto getCurrentRecord(String username) {
-        AppUser student = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
+        AppUser appUser = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
 
-        return modelMapper.map(student, AppUserDto.class);
+        return modelMapper.map(appUser, AppUserDto.class);
     }
 }

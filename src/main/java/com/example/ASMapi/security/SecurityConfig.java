@@ -1,6 +1,8 @@
 package com.example.ASMapi.security;
 
 import com.example.ASMapi.security.filters.JwtFilter;
+import com.example.ASMapi.security.handler.AuthEntryPoint;
+import com.example.ASMapi.security.handler.AuthorizedResourceHandler;
 import com.example.ASMapi.security.utils.Roles;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -24,10 +26,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtFilter jwtFilter;
 
+    private final AuthEntryPoint authEntryPoint;
 
-    public SecurityConfig(UserDetailsService loginService, JwtFilter jwtFilter) {
+    private final AuthorizedResourceHandler authorizedResourceHandler;
+
+
+    public SecurityConfig(UserDetailsService loginService, JwtFilter jwtFilter, AuthEntryPoint authEntryPoint, AuthorizedResourceHandler authorizedResourceHandler) {
         this.loginService = loginService;
         this.jwtFilter = jwtFilter;
+        this.authEntryPoint = authEntryPoint;
+        this.authorizedResourceHandler = authorizedResourceHandler;
     }
 
     @Override
@@ -51,7 +59,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/**").hasAnyRole(Roles.ADMIN, Roles.STUDENT);
 
         http
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling()
+                .authenticationEntryPoint(authEntryPoint)
+                .accessDeniedHandler(authorizedResourceHandler);
     }
 
     @Bean
