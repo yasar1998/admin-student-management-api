@@ -14,7 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -30,17 +29,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthorizedResourceHandler authorizedResourceHandler;
 
+    private final PasswordEncoder passwordEncoder;
 
-    public SecurityConfig(UserDetailsService loginService, JwtFilter jwtFilter, AuthEntryPoint authEntryPoint, AuthorizedResourceHandler authorizedResourceHandler) {
+
+    public SecurityConfig(UserDetailsService loginService, JwtFilter jwtFilter, AuthEntryPoint authEntryPoint, AuthorizedResourceHandler authorizedResourceHandler, PasswordEncoder passwordEncoder) {
         this.loginService = loginService;
         this.jwtFilter = jwtFilter;
         this.authEntryPoint = authEntryPoint;
         this.authorizedResourceHandler = authorizedResourceHandler;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(loginService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(loginService).passwordEncoder(passwordEncoder);
     }
 
     @Bean
@@ -57,7 +59,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/login", "/register").permitAll()
                 .antMatchers("/api/**").hasAnyRole(Roles.ADMIN, Roles.STUDENT)
-                .antMatchers("/admin/**").hasAnyRole(Roles.ADMIN);
+                .antMatchers("/admin/**").hasAnyRole(Roles.ADMIN)
+                .antMatchers("/v2/api-docs").permitAll()
+                .antMatchers("/swagger-ui/**", "/swagger-resources", "/swagger-resources/**", "/swagger-ui.html").permitAll()
+                .anyRequest().authenticated();
 
         http
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
@@ -66,8 +71,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(authorizedResourceHandler);
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
 }

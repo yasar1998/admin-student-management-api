@@ -1,4 +1,4 @@
-package com.example.studentmanagementapi.config;
+package com.example.ASMapi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,16 +17,16 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2).select()
-                .apis(RequestHandlerSelectors.basePackage("com.example.studentmanagementapi"))
+                .apis(RequestHandlerSelectors.basePackage("com.example.ASMapi"))
                 .build()
                 .apiInfo(apiEndPointsInfo());
 
     }
 
     private ApiInfo apiEndPointsInfo() {
-        return new ApiInfoBuilder().title("student management task")
+        return new ApiInfoBuilder().title("admin student management task")
                 .description("")
-                .contact(new Contact("Yashar Mustafayev", "", "yasarmustafayev1998@gmail.com"))
+                .contact(new Contact("Yashar Mustafayev", "", "yasar.mustafa.business@gmail.com"))
                 .license("Apache 2.0")
                 .version("1.0.0")
                 .build();
