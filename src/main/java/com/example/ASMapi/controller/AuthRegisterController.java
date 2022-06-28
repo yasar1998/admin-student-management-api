@@ -1,16 +1,20 @@
 package com.example.ASMapi.controller;
 
+import com.example.ASMapi.dto.AppUserDto;
 import com.example.ASMapi.request.LoginRequest;
 import com.example.ASMapi.security.response.TokenResponse;
 import com.example.ASMapi.security.utils.TokenManager;
+import com.example.ASMapi.service.AppUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 
@@ -22,6 +26,7 @@ public class AuthRegisterController {
     private final TokenManager tokenManager;
 
     private final TokenResponse tokenResponse;
+
 
     public AuthRegisterController(AuthenticationManager authenticationManager, TokenManager tokenManager, TokenResponse tokenResponse) {
         this.authenticationManager = authenticationManager;
@@ -41,4 +46,7 @@ public class AuthRegisterController {
         tokenResponse.setToken(tokenManager.generateToken(loginRequest.getUsername()));
         return ResponseEntity.ok().body(tokenResponse);
     }
+
+
+
 }
