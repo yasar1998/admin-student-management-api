@@ -25,7 +25,7 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public IdResponse deleteRecord(Long id) {
+    public IdResponse deleteStudentRecord(Long id) {
         AppUser appUser = userRepository.findById(id).filter(user -> user.getRoleList().contains(Roles.STUDENT)).orElseThrow(()->new UserNotFoundException("Student not found"));
         userRepository.delete(appUser);
         IdResponse idResponse = new IdResponse();
@@ -34,10 +34,23 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public List<AppUserDto> getAllRecords() {
+    public List<AppUserDto> getAllStudentRecords() {
         return userRepository.findAll().stream()
                 .filter(student -> student.getRoleList().contains(Roles.STUDENT))
                 .map(student -> modelMapper.map(student, AppUserDto.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AppUserDto> getAllRecords() {
+        return userRepository.findAll().stream()
+                .map(student -> modelMapper.map(student, AppUserDto.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public AppUserDto getStudentRecordById(Long id) {
+        AppUser appUser = userRepository.findById(id).filter(user -> user.getRoleList().contains(Roles.STUDENT)).orElseThrow(()->new UserNotFoundException("Student not found"));
+        return modelMapper.map(appUser, AppUserDto.class);
     }
 }

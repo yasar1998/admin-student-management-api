@@ -7,7 +7,11 @@ import java.util.List;
 
 public interface AdminService {
 
-    public IdResponse deleteRecord(Long id);
+    public IdResponse deleteStudentRecord(Long id);
+
+    public List<AppUserDto> getAllStudentRecords();
 
     public List<AppUserDto> getAllRecords();
+
+    public AppUserDto getStudentRecordById(Long id);
 }

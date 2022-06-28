@@ -20,14 +20,22 @@ public class AdminController {
     }
 
     @DeleteMapping("/delete/student/{id}")
-    public ResponseEntity<IdResponse> deleteUser(@PathVariable Long id){
-        return new ResponseEntity(adminService.deleteRecord(id), HttpStatus.OK);
+    public ResponseEntity<IdResponse> deleteStudentUser(@PathVariable Long id){
+        return new ResponseEntity(adminService.deleteStudentRecord(id), HttpStatus.OK);
     }
 
     @GetMapping("/students")
     public ResponseEntity<List<AppUserDto>> getAllStudents(){
+        return ResponseEntity.ok().body(adminService.getAllStudentRecords());
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<List<AppUserDto>> getAllUsers(){
         return ResponseEntity.ok().body(adminService.getAllRecords());
     }
 
-
+    @GetMapping("/students/{id}")
+    public ResponseEntity<AppUserDto> getStudentUser(@PathVariable Long id){
+        return ResponseEntity.ok().body(adminService.getStudentRecordById(id));
+    }
 }
