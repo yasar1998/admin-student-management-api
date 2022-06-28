@@ -1,5 +1,6 @@
 package com.example.ASMapi.exceptions;
 
+import com.example.ASMapi.exceptions.custom.UnsuccessfulPasswordUpdateException;
 import com.example.ASMapi.exceptions.error.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,12 @@ public class ExceptionHandlerController {
         ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now().toString(),400, "Invalid request", request.getServletPath());
         errorResponse.setValidationErrors(validationErrors);
         return new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler(value = {UnsuccessfulPasswordUpdateException.class})
+    public ResponseEntity<ErrorResponse> handleUnsuccessfulPasswordUpdateException(HttpServletRequest request){
+        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now().toString(),409, "Password cannot be changed", request.getServletPath());
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
 }

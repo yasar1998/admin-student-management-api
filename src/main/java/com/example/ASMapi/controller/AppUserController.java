@@ -1,13 +1,14 @@
 package com.example.ASMapi.controller;
 
 import com.example.ASMapi.dto.AppUserDto;
+import com.example.ASMapi.request.PasswordUpdateRequest;
 import com.example.ASMapi.service.AppUserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
@@ -22,6 +23,11 @@ public class AppUserController {
     @GetMapping("/account")
     public ResponseEntity<AppUserDto> getCurrentUser(HttpServletRequest request){
         return ResponseEntity.ok(appUserService.getCurrentRecord(request.getUserPrincipal().getName()));
+    }
+
+    @PutMapping("/account/password/update")
+    public ResponseEntity<AppUserDto>updatePassword(@Valid @RequestBody PasswordUpdateRequest passwordUpdateRequest, HttpServletRequest request){
+        return new ResponseEntity<>(appUserService.updatePassword(passwordUpdateRequest, request.getUserPrincipal().getName()), HttpStatus.OK);
     }
 
 }
