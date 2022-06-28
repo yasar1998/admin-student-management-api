@@ -26,9 +26,9 @@ public class AsmApiApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-//		userRepository.save(new AppUser("yashar", passwordEncoder.encode("password"), "Yashar", "Mustafayev", Roles.ADMIN));
-//		userRepository.save(new AppUser("tom", passwordEncoder.encode("password"), "Tom", "Smith", Roles.STUDENT));
-//		userRepository.save(new AppUser("tural", passwordEncoder.encode("password"), "Tural", "Aliyev", Roles.STUDENT));
+//		userRepository.save(new AppUser("yashar", passwordEncoder().encode("password"), "Yashar", "Mustafayev", Roles.ADMIN));
+//		userRepository.save(new AppUser("tom", passwordEncoder().encode("password"), "Tom", "Smith", Roles.STUDENT));
+//		userRepository.save(new AppUser("tural", passwordEncoder().encode("password"), "Tural", "Aliyev", Roles.STUDENT));
 	}
 
 	@Bean
