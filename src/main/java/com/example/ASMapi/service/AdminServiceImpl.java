@@ -5,6 +5,7 @@ import com.example.ASMapi.dto.IdResponse;
 import com.example.ASMapi.entity.AppUser;
 import com.example.ASMapi.exceptions.custom.UserNotFoundException;
 import com.example.ASMapi.repository.UserRepository;
+import com.example.ASMapi.request.AssignRequest;
 import com.example.ASMapi.security.utils.Roles;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -51,6 +52,15 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public AppUserDto getStudentRecordById(Long id) {
         AppUser appUser = userRepository.findById(id).filter(user -> user.getRoleList().contains(Roles.STUDENT)).orElseThrow(()->new UserNotFoundException("Student not found"));
+        return modelMapper.map(appUser, AppUserDto.class);
+    }
+
+    @Override
+    public AppUserDto addRole(AssignRequest assignRequest) {
+        AppUser appUser = userRepository.findByUsername(assignRequest.getUsername()).orElseThrow(() -> new UserNotFoundException("User not found"));
+        appUser.setRoles(assignRequest.getRoles());
+        userRepository.save(appUser);
+
         return modelMapper.map(appUser, AppUserDto.class);
     }
 }

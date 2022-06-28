@@ -2,6 +2,7 @@ package com.example.ASMapi.controller;
 
 import com.example.ASMapi.dto.AppUserDto;
 import com.example.ASMapi.dto.IdResponse;
+import com.example.ASMapi.request.AssignRequest;
 import com.example.ASMapi.service.AdminService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,5 +38,10 @@ public class AdminController {
     @GetMapping("/students/{id}")
     public ResponseEntity<AppUserDto> getStudentUser(@PathVariable Long id){
         return ResponseEntity.ok().body(adminService.getStudentRecordById(id));
+    }
+
+    @PostMapping("/giveRole")
+    public ResponseEntity<AppUserDto> assignRole(@RequestBody AssignRequest assignRequest){
+        return ResponseEntity.ok().body(adminService.addRole(assignRequest));
     }
 }
