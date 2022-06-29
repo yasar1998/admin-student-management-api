@@ -35,6 +35,7 @@ public class AppUserServiceImpl implements AppUserService{
 
     @Override
     public AppUserDto createRecord(RegisterRequest registerRequest) {
+        registerRequest.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         AppUser appUser = userRepository.save(modelMapper.map(registerRequest, AppUser.class));
         return modelMapper.map(registerRequest, AppUserDto.class);
     }
