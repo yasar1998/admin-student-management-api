@@ -45,7 +45,7 @@ class AppUserControllerTest {
 
     @BeforeEach
     void setUp() {
-        userRepository.save(new AppUser("yashar", passwordEncoder.encode("password"), "Yashar", "Mustafayev", Roles.STUDENT));
+//        userRepository.save(new AppUser("yashar", passwordEncoder.encode("password"), "Yashar", "Mustafayev", Roles.ADMIN));
         userRepository.save(new AppUser("tural", passwordEncoder.encode("password"), "Tural", "Aliyev", Roles.STUDENT));
     }
 
@@ -55,7 +55,7 @@ class AppUserControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "yashar", roles = "STUDENT")
+    @WithMockUser(username = "yashar", roles = "ADMIN")
     void getCurrentUser() throws Exception {
         mockMvc.perform(get("/api/account"))
                 .andExpect(status().isOk())
@@ -63,7 +63,7 @@ class AppUserControllerTest {
                 .andExpect(jsonPath("$.username", equalTo("yashar")))
                 .andExpect(jsonPath("$.firstName", equalTo("Yashar")))
                 .andExpect(jsonPath("$.lastName", equalTo("Mustafayev")))
-                .andExpect(jsonPath("$.roles", equalTo("STUDENT")));
+                .andExpect(jsonPath("$.roles", equalTo("ADMIN")));
     }
 
     @Test

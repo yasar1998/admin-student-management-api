@@ -21,33 +21,33 @@ class UserRepositoryTest {
 
     @BeforeEach
     public void setUp(){
-        AppUser student1ToSave = new AppUser("yasar1998",
-                passwordEncoder.encode("password"),
-                "Yashar",
-                "Mustafayev",
-                "ADMIN");
+//        AppUser student1ToSave = new AppUser("yashar",
+//                passwordEncoder.encode("password"),
+//                "Yashar",
+//                "Mustafayev",
+//                "ADMIN");
         AppUser student2ToSave = new AppUser("tom12",
                 passwordEncoder.encode("password"),
                 "Tom",
                 "Smith",
                 "USER");
-        userRepository.save(student1ToSave);
+//        userRepository.save(student1ToSave);
         userRepository.save(student2ToSave);
     }
 
     @Test
     void testFindByUsername() {
-        AppUser studentToCompare = new AppUser("yasar1998",
+        AppUser studentToCompare = new AppUser("yashar",
                 "password",
                 "Yashar",
                 "Mustafayev",
                 "ADMIN");
 
-        assertEquals(studentToCompare.getUsername(), userRepository.findByUsername("yasar1998").get().getUsername());
-        assertTrue(passwordEncoder.matches(studentToCompare.getPassword(), userRepository.findByUsername("yasar1998").get().getPassword()));
-        assertEquals(studentToCompare.getFirstName(), userRepository.findByUsername("yasar1998").get().getFirstName());
-        assertEquals(studentToCompare.getLastName(), userRepository.findByUsername("yasar1998").get().getLastName());
-        assertEquals(studentToCompare.getRoles(), userRepository.findByUsername("yasar1998").get().getRoles());
+        assertEquals(studentToCompare.getUsername(), userRepository.findByUsername("yashar").get().getUsername());
+        assertTrue(passwordEncoder.matches(studentToCompare.getPassword(), userRepository.findByUsername("yashar").get().getPassword()));
+        assertEquals(studentToCompare.getFirstName(), userRepository.findByUsername("yashar").get().getFirstName());
+        assertEquals(studentToCompare.getLastName(), userRepository.findByUsername("yashar").get().getLastName());
+        assertEquals(studentToCompare.getRoles(), userRepository.findByUsername("yashar").get().getRoles());
     }
 
     @Test
