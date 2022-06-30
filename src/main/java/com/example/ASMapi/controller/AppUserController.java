@@ -20,7 +20,7 @@ public class AppUserController {
         this.appUserService = appUserService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<AppUserDto> getCurrentUser(HttpServletRequest request){
         return ResponseEntity.ok(appUserService.getCurrentRecord(request.getUserPrincipal().getName()));
     }

@@ -24,7 +24,6 @@ public class AuthorizedResourceHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
 
         PrintWriter out = response.getWriter();
         out.write(new ObjectMapper().writeValueAsString(authorizationErrorResponse));
