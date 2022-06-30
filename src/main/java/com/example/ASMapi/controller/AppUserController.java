@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/account")
 public class AppUserController {
 
     private final AppUserService appUserService;
@@ -20,12 +20,12 @@ public class AppUserController {
         this.appUserService = appUserService;
     }
 
-    @GetMapping("/account")
+    @GetMapping("/")
     public ResponseEntity<AppUserDto> getCurrentUser(HttpServletRequest request){
         return ResponseEntity.ok(appUserService.getCurrentRecord(request.getUserPrincipal().getName()));
     }
 
-    @PutMapping("/account/password/update")
+    @PutMapping("/password/update")
     public ResponseEntity<AppUserDto>updatePassword(@Valid @RequestBody PasswordUpdateRequest passwordUpdateRequest, HttpServletRequest request){
         return new ResponseEntity<>(appUserService.updatePassword(passwordUpdateRequest, request.getUserPrincipal().getName()), HttpStatus.OK);
     }

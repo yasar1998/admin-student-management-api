@@ -4,6 +4,7 @@ import com.example.ASMapi.entity.AppUser;
 import com.example.ASMapi.exceptions.custom.UserNotFoundException;
 import com.example.ASMapi.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,7 +27,7 @@ public class LoginService implements UserDetailsService {
         AppUser appUser = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
 
         log.info("user found in database");
-        return org.springframework.security.core.userdetails.User.builder()
+        return User.builder()
                 .username(appUser.getUsername())
                 .password(appUser.getPassword())
                 .authorities(new ArrayList<>())
