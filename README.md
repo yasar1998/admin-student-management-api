@@ -31,13 +31,13 @@
 
 ### REST endpoints
 - REST endpoints can be tested with Postman.
-- To review REST endpoints
-  - */swagger-ui/*
-  - */v2/api-docs*
+- To review REST endpoints' documentation
+  - */swagger-ui/*  (visualize and interact)
+  - */v2/api-docs* (visualize)
 
 ### Note
 It is better to have one admin user in the system during program startup to be able to check the endpoints since admin registration is impossible (it can only be assigned by admin user in the system)
 
 Admin User Credentials:
-- login: yashar
+- username: yashar
 - password: password
