@@ -14,6 +14,10 @@
 1. To run the project: *mvn spring-boot:run*
 2. To run the tests: *mvn clean test*
 
+## Run with Docker (Docker Compose)
+Step 1. mvn clean package (clean JAR creation)
+Step 2. docker-compose up
+
 
 ## Technologies
 - Spring Boot
