@@ -24,7 +24,7 @@ Step 2. docker-compose up
 - Spring Web (REST)
 - Spring Security (JWT based)
 - Spring Data JPA
-- H2 Database
+- H2 Database (Testing purposes)
 - Hibernate Validator
 - Jackson
 - Lombok
@@ -32,8 +32,10 @@ Step 2. docker-compose up
 - Slf4j logger
 - Unit Tests with JUnit and Mockito
 - Integration Tests with MockMvc
-
-### REST endpoints
+- Docker (Docker-compose)
+- PostgreSQL database (Docker container)
+ 
+## REST endpoints
 - REST endpoints can be tested with Postman.
 - To review REST endpoints' documentation
   - */swagger-ui/*  (visualize and interact)
